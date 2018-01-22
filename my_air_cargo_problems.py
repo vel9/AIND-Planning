@@ -208,7 +208,6 @@ class AirCargoProblem(Problem):
         out from the current state in order to satisfy each individual goal
         condition.
         """
-        # requires implemented PlanningGraph class
         pg = PlanningGraph(self, node.state)
         pg_levelsum = pg.h_levelsum()
         return pg_levelsum
@@ -224,10 +223,10 @@ class AirCargoProblem(Problem):
         decoded = decode_state(node.state, self.state_map)
         kb.tell(decoded.pos_sentence())
         current_clauses = kb.clauses
-        # "Almost implies the number of steps required to solve a relaxed problem
-        # is the number of unsatisfied goals" Russell-Norvig 382
-        # following gets the number of goal clauses not satisfied, works for 
-        # independent goals
+        # Russell-Norvig 382: "Almost implies the number of steps required to solve a relaxed problem
+        # is the number of unsatisfied goals" 
+        # following gets the number of goal clauses not satisfied,  
+        # works for independent goals
         # ref: https://ai-nd.slack.com/archives/C3TPR3RCG/p1502854124000011
         unsatified_goals = [goal_clause for goal_clause in self.goal if goal_clause not in current_clauses]
         return len(unsatified_goals)
